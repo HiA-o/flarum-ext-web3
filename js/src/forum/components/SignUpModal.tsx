@@ -29,6 +29,8 @@ export default class SignUpModal extends BaseSignUpModal {
 
     if (!signUpWithEmail) {
       items.remove('email');
+      // user not need input the username
+      items.remove('username');
     }
 
     items.setContent(

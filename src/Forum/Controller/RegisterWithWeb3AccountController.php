@@ -67,6 +67,8 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
                 if (! filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
                     $data['email'] = $random.'@users.noreply.machine.local';
                 }
+                //wallet address as the username
+                $data['username'] = $data['address'];
             }
 
             $response = $this->api
