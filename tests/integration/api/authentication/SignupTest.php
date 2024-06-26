@@ -19,7 +19,7 @@ class SignupTest  extends TestCase
     {
         parent::setUp();
 
-        $this->extension('blomstra-web3');
+        $this->extension('maojindao55-web3');
 
         $pair = (new SchnorrSignaturesBindings())->pairFromSeed('fac7959dbfe72f052e5a0c3c8d6530f202b02fd8f9f5ca3580ec8deb7797479e');
 
@@ -123,7 +123,7 @@ class SignupTest  extends TestCase
     /** @test */
     public function can_signup_without_email()
     {
-        $this->setting('blomstra-web3.signup-with-email', false);
+        $this->setting('maojindao55-web3.signup-with-email', false);
 
         $sr = new SchnorrSignaturesBindings();
         $pair = $sr->pairFromSeed('dac7959dbae72f052e5a0c3c8d6530f202b02fd8f9f5ca1580ec8deb7797479e');

@@ -39,7 +39,7 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
 
     public function handle(Request $request): ResponseInterface
     {
-        if (! $this->settings->get('blomstra-web3.allow-sign-up')) {
+        if (! $this->settings->get('maojindao55-web3.allow-sign-up')) {
             throw new NotAuthenticatedException();
         }
 
@@ -47,7 +47,7 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
 
         $this->db->beginTransaction();
 
-        $signUpWithEmail = $this->settings->get('blomstra-web3.signup-with-email');
+        $signUpWithEmail = $this->settings->get('maojindao55-web3.signup-with-email');
 
         try {
             // Create registration token.

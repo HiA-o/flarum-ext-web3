@@ -17,7 +17,7 @@ class CreateTest extends TestCase
     {
         parent::setUp();
 
-        $this->extension('blomstra-web3');
+        $this->extension('maojindao55-web3');
 
         $this->prepareDatabase([
             'users' => [

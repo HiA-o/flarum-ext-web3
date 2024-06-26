@@ -28,7 +28,7 @@ export default class PolkadotConnectWalletModal<
   }
 
   title() {
-    return app.translator.trans('blomstra-web3.forum.polkadot-connect-wallet-modal.title');
+    return app.translator.trans('maojindao55-web3.forum.polkadot-connect-wallet-modal.title');
   }
 
   view() {

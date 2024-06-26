@@ -8,7 +8,7 @@ import SignUpModal from './SignUpModal';
 
 export default class LogInModal extends BaseLogInModal {
   title() {
-    return app.translator.trans('blomstra-web3.forum.log-in.with-wallet');
+    return app.translator.trans('maojindao55-web3.forum.log-in.with-wallet');
   }
 
   content() {
@@ -28,7 +28,7 @@ export default class LogInModal extends BaseLogInModal {
     items.setContent(
       'submit',
       <Button className="Button Button--block Button--primary" type="submit" disabled={!this.identification()} loading={this.loading}>
-        {app.translator.trans('blomstra-web3.forum.log-in.select-wallet-account', {
+        {app.translator.trans('maojindao55-web3.forum.log-in.select-wallet-account', {
           rightArrow: icon('fas fa-arrow-right'),
         })}
       </Button>
@@ -40,10 +40,10 @@ export default class LogInModal extends BaseLogInModal {
   footer() {
     return [
       <p className="LogInModal-forgotPassword">
-        <a onclick={() => app.modal.show(BaseLogInModal)}>{app.translator.trans('blomstra-web3.forum.log-in.basic-login-link')}</a>
+        <a onclick={() => app.modal.show(BaseLogInModal)}>{app.translator.trans('maojindao55-web3.forum.log-in.basic-login-link')}</a>
       </p>,
 
-      app.forum.attribute('blomstra-web3.allow-sign-up') ? (
+      app.forum.attribute('maojindao55-web3.allow-sign-up') ? (
         <p className="LogInModal-signUp">
           {app.translator.trans('core.forum.log_in.sign_up_text', { a: <a onclick={() => app.modal.show(SignUpModal)} /> })}
         </p>

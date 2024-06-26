@@ -60,7 +60,7 @@ export default class EvmConnectWalletModal<
   }
 
   title(): Mithril.Children {
-    return app.translator.trans('blomstra-web3.forum.evm-connect-wallet-modal.title');
+    return app.translator.trans('maojindao55-web3.forum.evm-connect-wallet-modal.title');
   }
 
   view() {
@@ -88,16 +88,16 @@ export default class EvmConnectWalletModal<
           {app.web3accounts.exists(this.currentAddress) ? (
             <>
               <Button className="Button" onclick={() => this.disconnect(false)}>
-                {app.translator.trans('blomstra-web3.forum.evm-connect-wallet-modal.disconnect')}
+                {app.translator.trans('maojindao55-web3.forum.evm-connect-wallet-modal.disconnect')}
               </Button>
               <Button className="Button" onclick={() => this.disconnect(true)}>
-                {app.translator.trans('blomstra-web3.forum.evm-connect-wallet-modal.disconnect-and-unbind')}
+                {app.translator.trans('maojindao55-web3.forum.evm-connect-wallet-modal.disconnect-and-unbind')}
               </Button>
             </>
           ) : (
             <Button className="Button" onclick={this.bind.bind(this)}>
               {app.translator.trans(
-                app.session.user ? 'blomstra-web3.forum.evm-connect-wallet-modal.bind' : 'blomstra-web3.forum.evm-connect-wallet-modal.select'
+                app.session.user ? 'maojindao55-web3.forum.evm-connect-wallet-modal.bind' : 'maojindao55-web3.forum.evm-connect-wallet-modal.select'
               )}
             </Button>
           )}
@@ -142,7 +142,7 @@ export default class EvmConnectWalletModal<
 
       if (this.attrs.onattach) this.attrs.onattach(this.currentAddress!, signature, source, type);
     } catch (error: any) {
-      app.alerts.show({ type: 'error' }, app.translator.trans('blomstra-web3.forum.connect-wallet-modal.could-not-sign'));
+      app.alerts.show({ type: 'error' }, app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.could-not-sign'));
       app.alerts.show({ type: 'error' }, error.message);
     }
 

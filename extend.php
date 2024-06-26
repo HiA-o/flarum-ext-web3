@@ -59,12 +59,12 @@ return [
         }),
 
     (new Extend\Settings())
-        ->default('blomstra-web3.allow-sign-up', 1)
-        ->default('blomstra-web3.signup-with-email', 1)
-        ->default('blomstra-web3.no-email-signup-message', '')
-        ->serializeToForum('blomstra-web3.allow-sign-up', 'blomstra-web3.allow-sign-up', 'boolval')
-        ->serializeToForum('blomstra-web3.signup-with-email', 'blomstra-web3.signup-with-email', 'boolval')
-        ->serializeToForum('blomstra-web3.prioritize-web3-auth-modals', 'blomstra-web3.prioritize-web3-auth-modals', 'boolval')
-        ->serializeToForum('blomstra-web3.infura-project-id', 'blomstra-web3.infura-project-id')
-        ->serializeToForum('blomstra-web3.no-email-signup-message', 'blomstra-web3.no-email-signup-message'),
+        ->default('maojindao55-web3.allow-sign-up', 1)
+        ->default('maojindao55-web3.signup-with-email', 1)
+        ->default('maojindao55-web3.no-email-signup-message', '')
+        ->serializeToForum('maojindao55-web3.allow-sign-up', 'maojindao55-web3.allow-sign-up', 'boolval')
+        ->serializeToForum('maojindao55-web3.signup-with-email', 'maojindao55-web3.signup-with-email', 'boolval')
+        ->serializeToForum('maojindao55-web3.prioritize-web3-auth-modals', 'maojindao55-web3.prioritize-web3-auth-modals', 'boolval')
+        ->serializeToForum('maojindao55-web3.infura-project-id', 'maojindao55-web3.infura-project-id')
+        ->serializeToForum('maojindao55-web3.no-email-signup-message', 'maojindao55-web3.no-email-signup-message'),
 ];

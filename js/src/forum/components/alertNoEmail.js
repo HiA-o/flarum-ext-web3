@@ -7,7 +7,7 @@ import ChangeEmailModal from './ChangeEmailModal';
  */
 export default function alertNoEmail(app) {
   const user = app.session.user;
-  let message = app.forum.attribute('blomstra-web3.no-email-signup-message');
+  let message = app.forum.attribute('maojindao55-web3.no-email-signup-message');
 
   if (!message || !user || !user.isEmailFake()) return;
 

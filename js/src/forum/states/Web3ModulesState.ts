@@ -8,7 +8,7 @@ export default class Web3ModulesState {
     if (this.loaded) return;
 
     this.modules = await import(
-      `${app.forum.attribute('baseUrl')}/assets/extensions/blomstra-web3/web3.js` /* webpackIgnore: true, webpackPrefetch: true */
+      `${app.forum.attribute('baseUrl')}/assets/extensions/maojindao55-web3/web3.js` /* webpackIgnore: true, webpackPrefetch: true */
     );
 
     this.loaded = true;

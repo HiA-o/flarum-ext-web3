@@ -19,7 +19,7 @@ export default class AttachedWallets extends Component {
     }
 
     return (
-      <FieldSet className={`Settings-wallets`} label={app.translator.trans(`blomstra-web3.forum.settings.wallets_heading`)}>
+      <FieldSet className={`Settings-wallets`} label={app.translator.trans(`maojindao55-web3.forum.settings.wallets_heading`)}>
         {this.listAccountsView()}
         <Button
           icon="fas fa-wallet"
@@ -30,7 +30,7 @@ export default class AttachedWallets extends Component {
             })
           }
         >
-          {app.translator.trans('blomstra-web3.forum.settings.wallet-connect-button')}
+          {app.translator.trans('maojindao55-web3.forum.settings.wallet-connect-button')}
         </Button>
       </FieldSet>
     );
@@ -73,7 +73,7 @@ export default class AttachedWallets extends Component {
           <div className="AttachedWallets-account-address">{address}</div>
         </div>
         <div className="AttachedWallets-account-actions">
-          <Tooltip text={app.translator.trans('blomstra-web3.forum.settings.unbind')}>
+          <Tooltip text={app.translator.trans('maojindao55-web3.forum.settings.unbind')}>
             <Button className="Button Button--icon" icon="fas fa-unlink" onclick={() => this.unbind(account)} />
           </Tooltip>
         </div>
@@ -82,7 +82,7 @@ export default class AttachedWallets extends Component {
   }
 
   unbind(account: Web3Account) {
-    if (confirm(extractText(app.translator.trans('blomstra-web3.forum.settings.unbind_confirm')))) {
+    if (confirm(extractText(app.translator.trans('maojindao55-web3.forum.settings.unbind_confirm')))) {
       account.delete().then(() => {
         app.web3accounts.remove(account.address());
         m.redraw();

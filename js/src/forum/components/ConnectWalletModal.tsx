@@ -31,7 +31,7 @@ export default class ConnectWalletModal<CustomAttrs extends IConnectWalletModalA
   }
 
   title(): Mithril.Children {
-    return app.translator.trans('blomstra-web3.forum.connect-wallet-modal.title');
+    return app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.title');
   }
 
   content(): Mithril.Children {
@@ -46,7 +46,7 @@ export default class ConnectWalletModal<CustomAttrs extends IConnectWalletModalA
               icon="fas fa-arrow-left"
               onclick={() => (this.current = null)}
             >
-              {app.translator.trans('blomstra-web3.forum.connect-wallet-modal.goback')}
+              {app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.goback')}
             </Button>
           </div>
           <ComponentName onerror={this.onerror.bind(this)} {...this.attrs} key={this.current} />
@@ -61,11 +61,11 @@ export default class ConnectWalletModal<CustomAttrs extends IConnectWalletModalA
     return (
       <div className="Form Form--centered">
         <div className="Form-group">
-          <Button className="Button Blomstra-Web3-Button--polkadot Button--block" onclick={() => (this.current = 'polkadot')}>
-            {app.translator.trans('blomstra-web3.forum.connect-wallet-modal.polkadot-wallets')}
+          <Button className="Button maojindao55-web3-Button--polkadot Button--block" onclick={() => (this.current = 'polkadot')}>
+            {app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.polkadot-wallets')}
           </Button>
-          <Button className="Button Blomstra-Web3-Button--evm Button--block" onclick={() => (this.current = 'evm')}>
-            {app.translator.trans('blomstra-web3.forum.connect-wallet-modal.evm-wallets')}
+          <Button className="Button maojindao55-web3-Button--evm Button--block" onclick={() => (this.current = 'evm')}>
+            {app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.evm-wallets')}
           </Button>
         </div>
       </div>

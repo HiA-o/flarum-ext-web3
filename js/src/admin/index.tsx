@@ -5,13 +5,13 @@ app.initializers.add('maojindao55/web3', () => {
   // TODO: show if ffi extension is installed and is `ffi.enable` ini is true.
 
   app.extensionData
-    .for('blomstra-web3')
+    .for('maojindao55-web3')
     .registerSetting(() => {
       if (!app.data['ffiEnabled']) {
         return (
           <div className="Form-group">
             <Alert type="warning" dismissible={false}>
-              {app.translator.trans('blomstra-web3.admin.settings.ffi-disabled')}
+              {app.translator.trans('maojindao55-web3.admin.settings.ffi-disabled')}
             </Alert>
           </div>
         );
@@ -20,30 +20,30 @@ app.initializers.add('maojindao55/web3', () => {
       return;
     })
     .registerSetting({
-      setting: 'blomstra-web3.prioritize-web3-auth-modals',
+      setting: 'maojindao55-web3.prioritize-web3-auth-modals',
       type: 'switch',
-      label: app.translator.trans('blomstra-web3.admin.settings.prioritize-web3-auth-modals'),
+      label: app.translator.trans('maojindao55-web3.admin.settings.prioritize-web3-auth-modals'),
     })
     .registerSetting({
-      setting: 'blomstra-web3.allow-sign-up',
+      setting: 'maojindao55-web3.allow-sign-up',
       type: 'switch',
-      label: app.translator.trans('blomstra-web3.admin.settings.allow-sign-up'),
+      label: app.translator.trans('maojindao55-web3.admin.settings.allow-sign-up'),
     })
     .registerSetting({
-      setting: 'blomstra-web3.signup-with-email',
+      setting: 'maojindao55-web3.signup-with-email',
       type: 'switch',
-      label: app.translator.trans('blomstra-web3.admin.settings.signup-with-email'),
+      label: app.translator.trans('maojindao55-web3.admin.settings.signup-with-email'),
     })
     .registerSetting({
-      setting: 'blomstra-web3.no-email-signup-message',
+      setting: 'maojindao55-web3.no-email-signup-message',
       type: 'text',
-      label: app.translator.trans('blomstra-web3.admin.settings.no-email-signup-message'),
-      help: app.translator.trans('blomstra-web3.admin.settings.no-email-signup-message-help'),
+      label: app.translator.trans('maojindao55-web3.admin.settings.no-email-signup-message'),
+      help: app.translator.trans('maojindao55-web3.admin.settings.no-email-signup-message-help'),
     })
     .registerSetting({
-      setting: 'blomstra-web3.infura-project-id',
+      setting: 'maojindao55-web3.infura-project-id',
       type: 'text',
-      label: app.translator.trans('blomstra-web3.admin.settings.infura-project-id'),
-      help: app.translator.trans('blomstra-web3.admin.settings.infura-project-id-help'),
+      label: app.translator.trans('maojindao55-web3.admin.settings.infura-project-id'),
+      help: app.translator.trans('maojindao55-web3.admin.settings.infura-project-id-help'),
     });
 });

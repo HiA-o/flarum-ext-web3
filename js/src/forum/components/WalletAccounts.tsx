@@ -34,7 +34,7 @@ export default class WalletAccounts<CustomAttrs extends IWalletAccountsAttrs = I
       <div className={classList('WalletAccounts', { 'WalletAccounts--loading': this.loading })}>
         <div className="Form--centered">
           <Button className="Button Button--text Button--block WalletAccounts-goback" icon="fas fa-arrow-left" onclick={() => this.attrs.onback()}>
-            {app.translator.trans('blomstra-web3.forum.polkadot-connect-wallet-modal.goback')}
+            {app.translator.trans('maojindao55-web3.forum.polkadot-connect-wallet-modal.goback')}
           </Button>
         </div>
         <div className="WalletAccounts-selectedWallet">
@@ -52,7 +52,7 @@ export default class WalletAccounts<CustomAttrs extends IWalletAccountsAttrs = I
 
     const isAttached = app.web3accounts.exists(u8aToHex(decodeAddress(account.address)));
 
-    let bindMessage = 'blomstra-web3.forum.polkadot-connect-wallet-modal.';
+    let bindMessage = 'maojindao55-web3.forum.polkadot-connect-wallet-modal.';
 
     switch (isAttached) {
       case true:
@@ -138,7 +138,7 @@ export default class WalletAccounts<CustomAttrs extends IWalletAccountsAttrs = I
 
         if (this.attrs.onattach) this.attrs.onattach(hexAddress, signature, source, type);
       } catch (error: any) {
-        app.alerts.show({ type: 'error' }, app.translator.trans('blomstra-web3.forum.connect-wallet-modal.could-not-sign'));
+        app.alerts.show({ type: 'error' }, app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.could-not-sign'));
         app.alerts.show({ type: 'error' }, error.message);
       }
 
@@ -157,7 +157,7 @@ export default class WalletAccounts<CustomAttrs extends IWalletAccountsAttrs = I
 
   onerror(error: RequestError) {
     if (error.status === 401) {
-      app.alerts.show({ type: 'error' }, app.translator.trans('blomstra-web3.forum.connect-wallet-modal.signature-invalid'));
+      app.alerts.show({ type: 'error' }, app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.signature-invalid'));
     } else {
       throw error;
     }

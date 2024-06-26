@@ -1,7 +1,7 @@
 import app from 'flarum/forum/app';
 
 export default async function getProvider() {
-  const INFURA_ID = app.forum.attribute<string | undefined>('blomstra-web3.infura-project-id');
+  const INFURA_ID = app.forum.attribute<string | undefined>('maojindao55-web3.infura-project-id');
 
   const { Web3Modal, CoinbaseWalletSDK, WalletConnectProvider } = await app.web3.all();
 

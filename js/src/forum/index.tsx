@@ -49,7 +49,7 @@ app.initializers.add('blomstra/web3', () => {
     // @ts-ignore
     const context = this.attrs.isSignUp ? 'sign-up' : 'log-in';
 
-    if (context === 'sign-up' && !app.forum.attribute<boolean>('blomstra-web3.allow-sign-up')) {
+    if (context === 'sign-up' && !app.forum.attribute<boolean>('maojindao55-web3.allow-sign-up')) {
       return;
     }
 
@@ -61,7 +61,7 @@ app.initializers.add('blomstra/web3', () => {
         // @ts-ignore
         onclick={() => app.modal.show(this.attrs.isSignUp ? SignUpModal : LogInModal)}
       >
-        {app.translator.trans(`blomstra-web3.forum.${context}.with-wallet`)}
+        {app.translator.trans(`maojindao55-web3.forum.${context}.with-wallet`)}
       </LogInButton>
     );
   });
@@ -71,8 +71,8 @@ app.initializers.add('blomstra/web3', () => {
     if (app.session.user) return;
 
     if (
-      (app.forum.attribute<boolean>('blomstra-web3.prioritize-web3-auth-modals') && app.forum.attribute<boolean>('blomstra-web3.allow-sign-up')) ||
-      (app.forum.attribute<boolean>('blomstra-web3.allow-sign-up') && !app.forum.attribute<boolean>('allowSignUp'))
+      (app.forum.attribute<boolean>('maojindao55-web3.prioritize-web3-auth-modals') && app.forum.attribute<boolean>('maojindao55-web3.allow-sign-up')) ||
+      (app.forum.attribute<boolean>('maojindao55-web3.allow-sign-up') && !app.forum.attribute<boolean>('allowSignUp'))
     ) {
       if (items.has('signUp')) {
         items.remove('signUp');
@@ -87,7 +87,7 @@ app.initializers.add('blomstra/web3', () => {
       );
     }
 
-    if (app.forum.attribute<boolean>('blomstra-web3.prioritize-web3-auth-modals') && items.has('logIn')) {
+    if (app.forum.attribute<boolean>('maojindao55-web3.prioritize-web3-auth-modals') && items.has('logIn')) {
       items.get('logIn').attrs.onclick = () => app.modal.show(LogInModal);
     }
   });
