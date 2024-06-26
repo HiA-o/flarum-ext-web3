@@ -28,14 +28,14 @@ A [Flarum](http://flarum.org) extension. Web3 EVM & Rust Wallets connection for 
 Install with composer:
 
 ```sh
-composer require blomstra/web3:"*"
+composer require maojindao55/web3:"*"
 php flarum assets:publish
 ```
 
 ## Updating
 
 ```sh
-composer update blomstra/web3
+composer update maojindao55/web3
 php flarum migrate
 php flarum cache:clear
 php flarum assets:publish
