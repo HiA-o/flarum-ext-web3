@@ -38,7 +38,7 @@ export default class SignUpModal extends BaseSignUpModal {
       <Button
         className="Button Button--block Button--primary"
         type="submit"
-        disabled={!this.username() || (!this.email() && signUpWithEmail)}
+        disabled={false}
         loading={this.loading}
       >
         {app.translator.trans('blomstra-web3.forum.sign-up.select-wallet-account', {

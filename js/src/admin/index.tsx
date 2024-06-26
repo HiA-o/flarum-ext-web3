@@ -1,7 +1,7 @@
 import app from 'flarum/admin/app';
 import Alert from 'flarum/common/components/Alert';
 
-app.initializers.add('blomstra/web3', () => {
+app.initializers.add('maojindao55/web3', () => {
   // TODO: show if ffi extension is installed and is `ffi.enable` ini is true.
 
   app.extensionData
