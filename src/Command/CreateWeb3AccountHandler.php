@@ -47,7 +47,7 @@ class CreateWeb3AccountHandler
         // Verify that the user does in fact own the account.
         $isValid = $this->verifiers
             ->get($account->type)
-            ->verify($signature, $account->address, $account->address);
+            ->verify($signature, 'user-airdrop', $account->address);
 
         if (! $isValid) {
             throw new InvalidSignatureException();
