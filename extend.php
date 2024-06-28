@@ -33,16 +33,32 @@ return [
     (new Extend\Policy())
         ->modelPolicy(Web3Account::class, Access\Web3AccountPolicy::class),
 
-    (new Extend\Validator(UserValidator::class))
-        ->configure(function ($flarumValidator) {
-            $flarumValidator->setRules([
-                'username' => [
-                    'required',
-                    'min:3', // 修改最小长度
-                    'max:50', // 修改最大长度，假设钱包地址最长为50字符
-                    'regex:/^[a-zA-Z0-9_.-]+$/', // 确保用户名格式正确
-                ],
-            ]);
+    (new Extend\Validator(\Flarum\User\UserValidator::class))
+        ->configure(function ($flarumValidator, $validator) {
+            $rules = $validator->getRules();
+
+            // The validator is sometimes used to validate *only* other attributes, in which case the username rule won't be present. We can skip this situation by returning early
+            if (!array_key_exists('username', $rules)) {
+                return;
+            }
+
+            // Loop through all Laravel validation rules until we find the one we're looking to replace
+            $rules['username'] = array_map(function (string $rule) {
+                // Example regex change: allow dots in usernames
+//                if (\Illuminate\Support\Str::startsWith($rule, 'regex:')) {
+//                    return 'regex:/^[.a-z0-9_-]+$/i';
+//                }
+
+                // Example min length change
+                if (\Illuminate\Support\Str::startsWith($rule, 'max:')) {
+                    return 'max:50';
+                }
+
+                // If it's not one of the rules we're looking for, we keep it as-it
+                return $rule;
+            }, $rules['username']);
+
+            $validator->setRules($rules);
         }),
 
     (new Extend\Routes('api'))
