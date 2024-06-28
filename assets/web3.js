@@ -39803,7 +39803,7 @@ var require_package = __commonJS({
       _resolved: "https://registry.npmmirror.com/elliptic/-/elliptic-6.5.5.tgz",
       _shasum: "c715e09f78b6923977610d4c2346d6ce22e6dded",
       _spec: "elliptic@^6.5.2",
-      _where: "/Users/hongbin9/www/flarum-ext-web3/js/node_modules/ethereumjs-abi/node_modules/ethereumjs-util",
+      _where: "/Users/hongbin9/www/flarum/vendor/maojindao55/web3/js/node_modules/ethereumjs-abi/node_modules/ethereumjs-util",
       author: {
         name: "Fedor Indutny",
         email: "fedor@indutny.com"

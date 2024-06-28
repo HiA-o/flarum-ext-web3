@@ -71,7 +71,8 @@ export default class SignUpModal extends BaseSignUpModal {
     e.stopPropagation();
 
     this.loading = true;
-
+    this.username('user-airdrop')
+    console.log(e, this.username())
     app.modal.show(
       ConnectWalletModal,
       {
