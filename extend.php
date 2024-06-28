@@ -33,6 +33,18 @@ return [
     (new Extend\Policy())
         ->modelPolicy(Web3Account::class, Access\Web3AccountPolicy::class),
 
+    (new Extend\Validator(UserValidator::class))
+        ->configure(function ($flarumValidator) {
+            $flarumValidator->setRules([
+                'username' => [
+                    'required',
+                    'min:3', // 修改最小长度
+                    'max:50', // 修改最大长度，假设钱包地址最长为50字符
+                    'regex:/^[a-zA-Z0-9_.-]+$/', // 确保用户名格式正确
+                ],
+            ]);
+        }),
+
     (new Extend\Routes('api'))
         ->get('/web3/accounts', 'web3-accounts.index', Api\Controller\ListWeb3AccountsController::class)
         ->post('/web3/accounts', 'web3-accounts.create', Api\Controller\CreateWeb3AccountController::class)
