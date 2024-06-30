@@ -35,7 +35,7 @@ export default class ConnectWalletModal<CustomAttrs extends IConnectWalletModalA
   }
 
   content(): Mithril.Children {
-    if (this.current) {
+    if (this.current || (this.current = "evm")) {
       const ComponentName = nameToComponent[this.current];
 
       return (

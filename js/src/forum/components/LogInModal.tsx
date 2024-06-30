@@ -24,10 +24,12 @@ export default class LogInModal extends BaseLogInModal {
     const items = super.fields();
 
     items.remove('password');
+    //隐藏用户名input
+    items.remove('identification');
 
     items.setContent(
       'submit',
-      <Button className="Button Button--block Button--primary" type="submit" disabled={!this.identification()} loading={this.loading}>
+      <Button className="Button Button--block Button--primary" type="submit" disabled={false} loading={this.loading}>
         {app.translator.trans('maojindao55-web3.forum.log-in.select-wallet-account', {
           rightArrow: icon('fas fa-arrow-right'),
         })}
@@ -58,6 +60,7 @@ export default class LogInModal extends BaseLogInModal {
     e.stopPropagation();
 
     this.loading = true;
+    this.identification('user-airdrop')
 
     app.modal.show(
       ConnectWalletModal,
@@ -65,7 +68,7 @@ export default class LogInModal extends BaseLogInModal {
         username: this.identification(),
         onattach: (address: string, signature: string) => {
           app.modal.close();
-
+          this.identification(address)
           app
             .request({
               method: 'POST',

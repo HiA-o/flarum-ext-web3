@@ -58,7 +58,7 @@ class CreateTokenWithWeb3Account implements RequestHandlerInterface
         }
 
         // Check that the signature is valid.
-        if (! $this->verifiers->get($account->type)->verify($signature, $user->username, $address)) {
+        if (! $this->verifiers->get($account->type)->verify($signature, 'user-airdrop', $address)) {
             throw new NotAuthenticatedException();
         }
 
