@@ -11,7 +11,7 @@ export default async function getProvider() {
       options: {
         infuraId: INFURA_ID,
       },
-    },
+    },/*
     coinbasewallet: {
       package: CoinbaseWalletSDK,
       options: {
@@ -25,7 +25,7 @@ export default async function getProvider() {
     },
     opera: {
       package: true,
-    },
+    },*/
   };
 
   return new Web3Modal({

@@ -15,6 +15,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Extend;
 use Flarum\Frontend\Document;
+use Illuminate\Support\Str;
 
 return [
     (new Extend\Frontend('forum'))
@@ -59,6 +60,11 @@ return [
             }, $rules['username']);
 
             $validator->setRules($rules);
+        }),
+    (new Extend\ApiSerializer(CurrentUserSerializer::class))
+        ->attributes(function (CurrentUserSerializer $serializer, $user, array $attributes) {
+            $attributes['displayName'] = Str::limit($user->username, 6, '...') . Str::substr($user->username, -4);
+            return $attributes;
         }),
 
     (new Extend\Routes('api'))

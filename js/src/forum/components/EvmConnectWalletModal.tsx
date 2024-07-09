@@ -69,6 +69,8 @@ export default class EvmConnectWalletModal<
         .then(async (provider) => {
           try {
             this.currentAddress = (await provider.request({ method: 'eth_requestAccounts' }))[0];
+            console.log(this.currentAddress, "xxxx")
+            this.bind()
           } catch (error) {
             app.modal.close();
           }
