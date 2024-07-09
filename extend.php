@@ -63,7 +63,9 @@ return [
         }),
     (new Extend\ApiSerializer(CurrentUserSerializer::class))
         ->attributes(function (CurrentUserSerializer $serializer, $user, array $attributes) {
-            $attributes['displayName'] = Str::limit($user->username, 6, '...') . Str::substr($user->username, -4);
+            if (Str::length($user->username)>10) {
+                $attributes['displayName'] = Str::limit($user->username, 6, '...') . Str::substr($user->username, -4);
+            }
             return $attributes;
         }),
 
