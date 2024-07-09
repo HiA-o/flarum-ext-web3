@@ -13,6 +13,8 @@ namespace Blomstra\Web3;
 
 use Fig\Http\Message\StatusCodeInterface;
 use Flarum\Api\Serializer\CurrentUserSerializer;
+use Flarum\User\DisplayName\UsernameDriver;
+use Blomstra\Web3\Driver\CustomUsernameDriver;
 use Flarum\Extend;
 use Flarum\Frontend\Document;
 use Illuminate\Support\Str;
@@ -65,8 +67,16 @@ return [
         ->attributes(function (CurrentUserSerializer $serializer, $user, array $attributes) {
             if (Str::length($user->username)>10) {
                 $attributes['displayName'] = Str::limit($user->username, 6, '...') . Str::substr($user->username, -4);
+
             }
             return $attributes;
+        }),
+    (new Extend\User())
+        ->displayNameDriver('custom', CustomUsernameDriver::class),
+
+    (new Extend\Event())
+        ->listen(Saving::class, function (Saving $event) {
+            $event->user->display_name_driver = 'custom';
         }),
 
     (new Extend\Routes('api'))

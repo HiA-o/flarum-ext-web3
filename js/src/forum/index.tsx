@@ -16,9 +16,6 @@ import Web3ModulesState from './states/Web3ModulesState';
 import alertNoEmail from './components/alertNoEmail';
 import User from 'flarum/common/models/User';
 import Model from 'flarum/common/Model';
-import UserCard from 'flarum/components/UserCard';
-import UserPage from 'flarum/components/UserPage';
-import username from 'flarum/helpers/username';
 
 app.initializers.add('blomstra/web3', () => {
   app.store.models['web3-accounts'] = Web3Account;
@@ -36,26 +33,6 @@ app.initializers.add('blomstra/web3', () => {
       alertMounted = true;
     }
   });
-  extend(UserCard.prototype, 'infoItems', function(items) {
-    const user = this.attrs.user;
-    if (user) {
-      const displayName = user.attribute('displayName');
-      if (displayName) {
-        items.replace('username', username(user), displayName);
-      }
-    }
-  });
-
-  extend(UserPage.prototype, 'headerItems', function(items) {
-    const user = this.user;
-    if (user) {
-      const displayName = user.attribute('displayName');
-      if (displayName) {
-        items.replace('username', username(user), displayName);
-      }
-    }
-  });
-
   // Session button to bind web3 accounts to current user account.
   extend(SettingsPage.prototype, 'settingsItems', (items) => {
     items.add('wallets', <AttachedWallets />, 95);
