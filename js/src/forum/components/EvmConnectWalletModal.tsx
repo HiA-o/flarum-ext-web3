@@ -3,56 +3,19 @@ import Button from 'flarum/common/components/Button';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import { IConnectWalletModalAttrs } from './ConnectWalletModal';
 import Web3Account from '../models/Web3Account';
-import getProvider from '../utils/getProvider';
-import type Core from 'web3modal';
 import type Mithril from 'mithril';
 import Component from 'flarum/common/Component';
-
-// import { W3mModal, W3mConnectButton } from '@web3modal/ui';
-// import { ClientCtrl, ConfigCtrl, ConfigOptions } from '@web3modal/core';
-// import { chains, providers } from '@web3modal/ethereum';
-
-// const projectId = '5bae682417f3958e125f25a0b67535e7';
-//
-// const config: ConfigOptions = {
-//   projectId,
-//   theme: 'dark',
-//   accentColor: 'default',
-//   ethereum: {
-//     appName: 'web3Modal',
-//     autoConnect: true,
-//     chains: [chains.mainnet, chains.rinkeby, chains.avalanche, chains.avalancheFuji, chains.polygon, chains.polygonMumbai],
-//     providers: [providers.walletConnectProvider({ projectId })],
-//   },
-// };
-
-// class Web3Modal extends Component {
-//   async oninit(vnode: Mithril.Vnode<any, this>) {
-//     super.oninit(vnode);
-//
-//     // ConfigCtrl.setConfig(config);
-//     // if (config.ethereum) await ClientCtrl.setEthereumClient(config.ethereum);
-//   }
-//
-//   view(): Mithril.Children {
-//     return <w3m-modal />;
-//   }
-// }
 
 export interface IEvmConnectWalletModalAttrs extends IConnectWalletModalAttrs {}
 
 export default class EvmConnectWalletModal<
   CustomAttrs extends IEvmConnectWalletModalAttrs = IEvmConnectWalletModalAttrs
 > extends Component<CustomAttrs> {
-  private web3Modal!: Core;
-  private provider?: any;
-  private __providerName?: string;
   private currentAddress?: string;
 
   oninit(vnode: Mithril.Vnode<CustomAttrs, this>) {
     super.oninit(vnode);
-
-    app.web3accounts.load();
+    this.connectMetaMask();
   }
 
   className(): string {
@@ -65,20 +28,6 @@ export default class EvmConnectWalletModal<
 
   view() {
     if (!this.currentAddress) {
-      this.getProvider()
-        .then(async (provider) => {
-          try {
-            this.currentAddress = (await provider.request({ method: 'eth_requestAccounts' }))[0];
-            console.log(this.currentAddress, "xxxx")
-            this.bind()
-          } catch (error) {
-            app.modal.close();
-          }
-
-          m.redraw();
-        })
-        .catch(() => app.modal.close());
-
       return <LoadingIndicator />;
     }
 
@@ -108,8 +57,23 @@ export default class EvmConnectWalletModal<
     );
   }
 
+  async connectMetaMask() {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        this.currentAddress = accounts[0];
+        await this.bind(); // 直接绑定
+        m.redraw();
+      } catch (error) {
+        console.error('MetaMask connection failed', error);
+      }
+    } else {
+      console.error('MetaMask not found');
+    }
+  }
+
   async bind() {
-    const provider = this.provider;
+    const provider = window.ethereum;
 
     try {
       const signature = await provider.request({
@@ -117,14 +81,10 @@ export default class EvmConnectWalletModal<
         params: [this.attrs.username, this.currentAddress],
       });
 
-      const { getProviderInfo } = await app.web3.all();
-
       const type = 'eth';
-      // Special handling required for binance wallet as it doesn't identify itself with a check of `isBinanceWallet`
-      const source = this.__providerName === 'binancechainwallet' ? 'Binance Chain' : getProviderInfo(provider).name;
+      const source = 'MetaMask';
 
       if (app.session.user) {
-        // Submit account to the backend
         const savedAccount = await app.store.createRecord<Web3Account>('web3-accounts').save(
           {
             address: this.currentAddress,
@@ -144,20 +104,17 @@ export default class EvmConnectWalletModal<
 
       if (this.attrs.onattach) this.attrs.onattach(this.currentAddress!, signature, source, type);
     } catch (error: any) {
-      app.alerts.show({ type: 'error' }, app.translator.trans('maojindao55-web3.forum.connect-wallet-modal.could-not-sign'));
-      app.alerts.show({ type: 'error' }, error.message);
+      console.error('Could not sign', error);
     }
 
     m.redraw();
   }
 
   async disconnect(unbind: boolean) {
-    const provider = this.provider;
+    const provider = window.ethereum;
 
     if (provider?.close) {
       await provider.close();
-
-      await this.web3Modal.clearCachedProvider();
     }
 
     const address = this.currentAddress;
@@ -167,24 +124,5 @@ export default class EvmConnectWalletModal<
     }
 
     delete this.currentAddress;
-  }
-
-  async getProvider() {
-    if (!this.web3Modal) {
-      this.web3Modal = await getProvider();
-    }
-
-    this.web3Modal.on('select', (providerName: string) => {
-      this.__providerName = providerName;
-    });
-
-    const provider = await this.web3Modal.connect();
-
-    provider.on('accountsChanged', (accounts: string[]) => {
-      this.currentAddress = accounts[0];
-      m.redraw();
-    });
-
-    return (this.provider = provider);
   }
 }
