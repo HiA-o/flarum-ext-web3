@@ -13,7 +13,11 @@ use Flarum\Api\Client;
 use Flarum\Foundation\Config;
 use Flarum\Http\RememberAccessToken;
 use Flarum\Http\Rememberer;
+use Flarum\Http\AccessToken;
+use Flarum\User\Event\LoggedIn;
+use Illuminate\Contracts\Events\Dispatcher;
 use Flarum\Http\SessionAuthenticator;
+use Flarum\User\UserRepository;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\Exception\NotAuthenticatedException;
 use Flarum\User\RegistrationToken;
@@ -34,11 +38,14 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
         protected Rememberer $rememberer,
         protected ConnectionInterface $db,
         protected SettingsRepositoryInterface $settings,
-        protected Config $config
+        protected Config $config,
+        protected Dispatcher $events,
+        protected UserRepository $users
     ) {}
 
     public function handle(Request $request): ResponseInterface
     {
+        
         if (! $this->settings->get('maojindao55-web3.allow-sign-up')) {
             throw new NotAuthenticatedException();
         }
@@ -70,6 +77,11 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
                 //wallet address as the username
                 $data['username'] = $data['address'];
             }
+            $user = User::where('username', $data['address'])->first();
+            if ($user) {
+                $response = $this->handleLogin($data, $request);
+                return $response;
+            }
 
             $response = $this->api
                 ->withParentRequest($request)
@@ -82,6 +94,7 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
                     ]
                 ])
                 ->post('/users');
+            
 
             // Reset `allow_sign_up`
             $this->settings->set('allow_sign_up', $initialAllowSignUpValue);
@@ -121,7 +134,6 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
 
                 if (isset($web3Body->data)) {
                     $token = RememberAccessToken::generate($actor->id);
-
                     $session = $request->getAttribute('session');
                     $this->authenticator->logIn($session, $token);
 
@@ -136,6 +148,40 @@ class RegisterWithWeb3AccountController implements RequestHandlerInterface
         } catch (Throwable $e) {
             $this->db->rollBack();
             throw $e;
+        }
+
+        return $response;
+    }
+    public function handleLogin($data, $request)
+    {
+        $params = [
+            'identification' => $data['address'],
+            'address' => $data['address'],
+            'signature' => $data['signature'],
+        ];
+
+        $response = $this->api->withParentRequest($request)->withBody($params)->post('/web3/token');
+
+        if ($response->getStatusCode() === 200) {
+            $data = json_decode($response->getBody());
+
+            $token = RememberAccessToken::generate($data->userId);
+
+            $session = $request->getAttribute('session');
+            $this->authenticator->logIn($session, $token);
+            $response = $this->api
+                ->withParentRequest($request)
+                ->withBody([
+                    'data' => [
+                        'attributes' => ['token' => $token],
+                    ]
+                ])
+                ->get('/users/'.$data->userId);
+            $this->events->dispatch(new LoggedIn($this->users->findOrFail($data->userId), $token));
+            if ($token instanceof RememberAccessToken) {
+                $response = $this->rememberer->remember($response, $token);
+            }
+            $this->db->commit();
         }
 
         return $response;
