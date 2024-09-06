@@ -76,11 +76,16 @@ app.initializers.add('blomstra/web3', () => {
       if (items.has('signUp')) {
         items.remove('signUp');
       }
+      const urlParams = new URLSearchParams(window.location.search);
+      const showLogin = urlParams.get('showLogin')
+      if (items.has('logIn') && !showLogin) {
+        items.remove('logIn');
+      }
 
       items.add(
         'signUp',
-        <Button className="Button Button--link" onclick={() => app.modal.show(SignUpModal)}>
-          {app.translator.trans('core.forum.header.sign_up_link')}
+        <Button Icon="fas fa-bolt" className="Button Button--link" onclick={() => app.modal.show(SignUpModal)}>
+          {app.translator.trans('core.forum.header.log_in_link')}
         </Button>,
         10
       );

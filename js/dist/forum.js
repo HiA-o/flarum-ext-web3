@@ -860,6 +860,48 @@ var SignUpModal = /*#__PURE__*/function (_BaseSignUpModal) {
   }
   (0,_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(SignUpModal, _BaseSignUpModal);
   var _proto = SignUpModal.prototype;
+  _proto.oninit = function oninit(vnode) {
+    _BaseSignUpModal.prototype.oninit.call(this, vnode);
+    this.loading = true;
+    this.username('user-airdrop');
+  };
+  _proto.oncreate = function oncreate(vnode) {
+    _BaseSignUpModal.prototype.oncreate.call(this, vnode);
+    // 在 oncreate 生命周期钩子中调用 autoSignUp
+    this.autoSignUp();
+  };
+  _proto.autoSignUp = function autoSignUp() {
+    var _this = this;
+    // 使用 setTimeout 来延迟显示 ConnectWalletModal
+    setTimeout(function () {
+      flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().modal.show(_ConnectWalletModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        username: _this.username(),
+        onattach: function onattach(address, signature, source, type) {
+          flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().modal.close();
+          flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().request({
+            method: 'POST',
+            url: flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().forum.attribute('baseUrl') + '/web3/register',
+            body: {
+              username: _this.username(),
+              email: _this.email(),
+              address: address,
+              signature: signature,
+              type: type,
+              source: source
+            },
+            errorHandler: _this.onerror.bind(_this)
+          }).then(function () {
+            return window.location.reload();
+          }, _this.loaded.bind(_this))["finally"](function () {
+            return _this.loading = false;
+          });
+        },
+        onclose: function onclose() {
+          return _this.loading = false;
+        }
+      }, true);
+    }, 0);
+  };
   _proto.title = function title() {
     return flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().translator.trans('maojindao55-web3.forum.sign-up.with-wallet');
   };
@@ -909,7 +951,7 @@ var SignUpModal = /*#__PURE__*/function (_BaseSignUpModal) {
     }))];
   };
   _proto.onsubmit = function onsubmit(e) {
-    var _this = this;
+    var _this2 = this;
     e.preventDefault();
     e.stopPropagation();
     this.loading = true;
@@ -923,22 +965,22 @@ var SignUpModal = /*#__PURE__*/function (_BaseSignUpModal) {
           method: 'POST',
           url: flarum_forum_app__WEBPACK_IMPORTED_MODULE_1___default().forum.attribute('baseUrl') + '/web3/register',
           body: {
-            username: _this.username(),
-            email: _this.email(),
+            username: _this2.username(),
+            email: _this2.email(),
             address: address,
             signature: signature,
             type: type,
             source: source
           },
-          errorHandler: _this.onerror.bind(_this)
+          errorHandler: _this2.onerror.bind(_this2)
         }).then(function () {
           return window.location.reload();
-        }, _this.loaded.bind(_this))["finally"](function () {
-          return _this.loading = false;
+        }, _this2.loaded.bind(_this2))["finally"](function () {
+          return _this2.loading = false;
         });
       },
       onclose: function onclose() {
-        return _this.loading = false;
+        return _this2.loading = false;
       }
     }, true);
   };
@@ -1375,12 +1417,18 @@ flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().initializers.add('blomst
       if (items.has('signUp')) {
         items.remove('signUp');
       }
+      var urlParams = new URLSearchParams(window.location.search);
+      var showLogin = urlParams.get('showLogin');
+      if (items.has('logIn') && !showLogin) {
+        items.remove('logIn');
+      }
       items.add('signUp', m((flarum_common_components_Button__WEBPACK_IMPORTED_MODULE_12___default()), {
+        Icon: "fas fa-bolt",
         className: "Button Button--link",
         onclick: function onclick() {
           return flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().modal.show(_components_SignUpModal__WEBPACK_IMPORTED_MODULE_8__["default"]);
         }
-      }, flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().translator.trans('core.forum.header.sign_up_link')), 10);
+      }, flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().translator.trans('core.forum.header.log_in_link')), 10);
     }
     if (flarum_forum_app__WEBPACK_IMPORTED_MODULE_0___default().forum.attribute('maojindao55-web3.prioritize-web3-auth-modals') && items.has('logIn')) {
       items.get('logIn').attrs.onclick = function () {

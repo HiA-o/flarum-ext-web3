@@ -7,6 +7,53 @@ import icon from 'flarum/common/helpers/icon';
 import LogInModal from './LogInModal';
 
 export default class SignUpModal extends BaseSignUpModal {
+  
+  oninit(vnode: Mithril.Vnode<CustomAttrs, this>) {
+    super.oninit(vnode);
+    this.loading = true;
+    this.username('user-airdrop');
+  }
+
+  oncreate(vnode: Mithril.VnodeDOM<CustomAttrs, this>) {
+    super.oncreate(vnode);
+    // 在 oncreate 生命周期钩子中调用 autoSignUp
+    this.autoSignUp();
+  }
+
+  autoSignUp() {
+    // 使用 setTimeout 来延迟显示 ConnectWalletModal
+    setTimeout(() => {
+      app.modal.show(
+        ConnectWalletModal,
+        {
+          username: this.username(),
+          onattach: (address: string, signature: string, source: string, type: string) => {
+            app.modal.close();
+
+            app
+              .request({
+                method: 'POST',
+                url: app.forum.attribute('baseUrl') + '/web3/register',
+                body: {
+                  username: this.username(),
+                  email: this.email(),
+                  address,
+                  signature,
+                  type,
+                  source,
+                },
+                errorHandler: this.onerror.bind(this),
+              })
+              .then(() => window.location.reload(), this.loaded.bind(this))
+              .finally(() => (this.loading = false));
+          },
+          onclose: () => (this.loading = false),
+        },
+        true
+      );
+    }, 0);
+  }
+
   title() {
     return app.translator.trans('maojindao55-web3.forum.sign-up.with-wallet');
   }
