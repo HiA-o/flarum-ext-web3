@@ -10,7 +10,6 @@
         "php": "^8.0",
         "flarum/core": "^1.5.0",
         "ext-ffi": "*",
-        "sijad/laravel-ecrecover": "^0.0.5"
     },
     "homepage": "https://blomstra.net",
     "support": {
