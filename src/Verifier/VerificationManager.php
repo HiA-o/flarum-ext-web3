@@ -11,10 +11,7 @@ class VerificationManager
     /**
      * @var array<string, class-string>
      */
-    public static array $verifiers = [
-        'sr25519' => PolkadotSignatureVerifier::class,
-        'eth' => EthereumSignatureVerifier::class,
-    ];
+    public static array $verifiers = [];
 
     private static Container $container;
 
